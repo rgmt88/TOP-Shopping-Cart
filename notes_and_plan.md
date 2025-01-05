@@ -26,7 +26,7 @@ Tech Stack:
 - Include error/loading states when fetching from the FakeStore API
 - Consider adding a 404 or “Not Found” page for invalid routes
 
-** We are going to use a top-level component (Add.jsx) using useState to manage the info from the shopping cart
+** We are going to use a top-level component (App.jsx) using useState to manage the info from the shopping cart
 
 
 
