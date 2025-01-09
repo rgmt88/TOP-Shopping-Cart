@@ -27,12 +27,23 @@ const NavRight = styled.div`
 `;
 
 const CartCounter = styled.span`
+    position: absolute;
+    top: -12px;
+    right: -10px;
     background: #000;
     color: #fff;
     border-radius: 50%;
-    padding: 0.3rem 0.6rem;
-    font-size: 0.8rem;
-    margin-left: 0.25rem;
+    font-size: 0.7rem;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items:center;
+    justify-content: center;
+`;
+
+const IconWrapper = styled.div`
+    position: relative;
+    display: inline-block;
 `;
 
 // Main NavBar component
@@ -55,10 +66,24 @@ function NavBar({ cartCount }) {
 
             {/* Right: User Page Link and Cart icon with count */}
             <NavRight>
-                <Link to="/user">User Page</Link>
+                <Link to="/user">
+                    <IconWrapper>
+                        <img 
+                            src="./accountIcon.svg"
+                            alt="Account Circle Icon"
+                            style={{ width: '24px', height: '24px' }}
+                        />
+                    </IconWrapper>
+                </Link>
                 <Link to ="/cart">
-                    Cart
-                    {cartCount > 0 && <CartCounter>{cartCount}</CartCounter>}
+                    <IconWrapper>
+                        <img 
+                            src="./cartIcon.svg"
+                            alt="Cart Icon"
+                            style={{ width: '24px', height: '24px' }}
+                        />
+                        {cartCount > 0 && <CartCounter>{cartCount}</CartCounter>}
+                    </IconWrapper>
                 </Link>
             </NavRight>
 
