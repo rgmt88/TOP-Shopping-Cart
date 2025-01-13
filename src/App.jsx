@@ -5,15 +5,43 @@ import ProductPage from './ProductPage';
 
 function App() {
 
-  // State to track items in cart
-  const [cartCount, setCartCount] = useState(0);
-  
+  // State to track items in the cart
+  const [cartItems, setCartItems] = useState([]);
+
+  // Add product to cart
   const handleAddToCart = (product, quantity) => {
-    // In a real app, you'd store cart items in state or context
-    // and update quantity per product. For now, just updating count:
-    setCartCount(prev => prev + quantity);
+    setCartItems(prevItems => {
+      // Check if the item already exists in the cart
+      const existingItem = prevItems.find(item => item.id === product.id);
+
+      if (existingItem) {
+        // Update the quantity of the existing item
+        return prevItems.map(item =>
+          item.id === product.id
+            ? { ...item, quantity: item.quantity + quantity }
+            : item
+        );
+      } else {
+        // Add the new item to the cart
+        const shortDesc = product.description.slice(0, 60) + '...';
+        return [
+          ...prevItems,
+          {
+            id: product.id,
+            image: product.image,
+            title: product.title,
+            shortDesc,
+            price: product.price,
+            quantity,
+          },
+        ];
+      }
+    });
   };
 
+  // Calculate total items in the cart
+  const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
+  console.log(cartItems);
   return (
     <Router>
       <NavBar cartCount={cartCount} />
@@ -55,7 +83,34 @@ function App() {
         />
 
         {/* Cart page example */}
-        <Route path="/cart" element={<h2>Your Shopping Cart</h2>}/>
+        <Route
+         path="/cart"
+         element={
+          <div>
+            <h2>Your Shopping Cart</h2>
+            {cartItems.length > 0 ? (
+              <ul>
+                {cartItems.map(item => (
+                  <li key={item.id}>
+                    <img 
+                      src={item.image}
+                      alt={item.title}
+                      style={{ width: '50px', heigh: '50px' }}
+                    />
+                    <div>
+                      <strong>{item.title}</strong> - ${item.price} x{' '}
+                      {item.quantity}
+                    </div>
+                    <p>{item.shortDesc}</p>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p>Your cart is empty.</p>
+            )}
+          </div>
+         }
+        />
 
         {/* 404 (Not Found) Route */}
         <Route

@@ -143,7 +143,7 @@ function ProductPage({ category, onAddToCart }) {
                                 const quantityInput = document.getElementById(
                                     `quantity-${product.id}`
                                 );
-                                const quantity = parseInt(quantityInput?.Value) || 1;
+                                const quantity = parseInt(quantityInput?.value) || 1;
                                 handleAddToCart(product, quantity);
                             }}
                         >
