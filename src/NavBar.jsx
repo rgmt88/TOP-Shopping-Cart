@@ -7,7 +7,7 @@ const NavBarContainer = styled.nav`
     align-items: center;
     justify-content: space-between;
     padding: 1rem 2rem;
-    background-color: #f2f2f2;    
+    background-color: #f2f2f2;  
 `;
 
 const Logo = styled.div`
@@ -18,6 +18,17 @@ const Logo = styled.div`
 const NavLinks = styled.div`
     display: flex;
     gap: 1.5rem;
+
+    a {
+        color:#000;
+        text-decoration: none;
+    }
+
+    a:visited,
+    a:hover,
+    a:active {
+        color: #000;
+    }
 `;
 
 const NavRight = styled.div`

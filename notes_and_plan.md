@@ -5,7 +5,7 @@ Objective: build a mock shopping cart
 UI /UX:
 We are going to have a simple landing page to greet the users. There’s going to be a nav bar with the logo on the left, on the middle – links to the 3 different shopping sections, and on the right the “user page” logo/link and the shopping cart logo/link (displays the number of items in the cart). This navbar stays constant in all the links.
 
-Then we are going to have a page that displays 6 items for shopping with corresponding information and the “Add to Cart” button (user manually types in how many items to buy).
+Then we are going to have a page that displays a grid 2x4 items for shopping with corresponding information and the “Add to Cart” button (user manually types in how many items to buy).
 
 Finally, we are going to have a shopping cart page that shows:
 

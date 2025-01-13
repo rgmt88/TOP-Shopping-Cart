@@ -1,15 +1,17 @@
 import { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import NavBar from "./NavBar"
+import ProductPage from './ProductPage';
 
 function App() {
 
   // State to track items in cart
   const [cartCount, setCartCount] = useState(0);
-
-  // Increment the cart count for demonstration (you'd do this when an item is added)
-  const handleAddToCart = () => {
-    setCartCount(prev => prev + 1);
+  
+  const handleAddToCart = (product, quantity) => {
+    // In a real app, you'd store cart items in state or context
+    // and update quantity per product. For now, just updating count:
+    setCartCount(prev => prev + quantity);
   };
 
   return (
@@ -22,7 +24,6 @@ function App() {
           element={
             <div style={{ margin: '2rem' }}>
               <h1>Welcome to MyStore</h1>
-              <button onClick={handleAddToCart}>Add to cart</button>
             </div>
           }
         />
@@ -30,7 +31,27 @@ function App() {
         {/* Electronics page example */}
         <Route
           path="/electronics"
-          element={<h2>Electronics Page</h2>}
+          element={
+            <div>
+              <h2>Electronics Page</h2>
+              {<ProductPage category={ "electronics" } onAddToCart={ handleAddToCart } />}
+            </div>
+          }
+        />
+
+        <Route
+          path="/clothing"
+          element={
+            <div>
+              <h2>Clothing Page</h2>
+              {<ProductPage category={ "men's clothing" } onAddToCart={ handleAddToCart }/>}
+            </div>
+          }
+        />
+
+        <Route 
+          path="/accessories"
+          element={<ProductPage category={ "jewelery" } onAddToCart={ handleAddToCart }/>}
         />
 
         {/* Cart page example */}
