@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import NavBar from "./NavBar"
 import ProductPage from './ProductPage';
+import CartPage from './CartPage';
 
 function App() {
 
@@ -39,9 +40,24 @@ function App() {
     });
   };
 
+  // Update Quantity in the cart
+  const updateItemQuantity = (itemId, newQuantity) => {
+    setCartItems(prevItems =>
+      prevItems.map(item =>
+        item.id === itemId ? { ...item, quantity: newQuantity } : item
+      )
+    );
+  };
+
+  // Remove Item from the cart
+  const removeItem = (itemId) => {
+    setCartItems(prevItems => prevItems.filter(item => item.id !== itemId));
+  };
+
   // Calculate total items in the cart
   const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
-  console.log(cartItems);
+  
+  
   return (
     <Router>
       <NavBar cartCount={cartCount} />
@@ -79,36 +95,24 @@ function App() {
 
         <Route 
           path="/accessories"
-          element={<ProductPage category={ "jewelery" } onAddToCart={ handleAddToCart }/>}
+          element={
+            <div>
+              <h2>Accessories Page</h2>
+              {<ProductPage category={ "jewelery" } onAddToCart={ handleAddToCart }/>}
+            </div>
+          }
         />
 
-        {/* Cart page example */}
         <Route
          path="/cart"
          element={
-          <div>
-            <h2>Your Shopping Cart</h2>
-            {cartItems.length > 0 ? (
-              <ul>
-                {cartItems.map(item => (
-                  <li key={item.id}>
-                    <img 
-                      src={item.image}
-                      alt={item.title}
-                      style={{ width: '50px', heigh: '50px' }}
-                    />
-                    <div>
-                      <strong>{item.title}</strong> - ${item.price} x{' '}
-                      {item.quantity}
-                    </div>
-                    <p>{item.shortDesc}</p>
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p>Your cart is empty.</p>
-            )}
-          </div>
+          <CartPage
+            cartItems={cartItems}
+            updateItemQuantity={updateItemQuantity}
+            removeItem={removeItem}
+            shipping={9.99}
+            taxRate={0.18}
+          />
          }
         />
 
