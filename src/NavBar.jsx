@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 // Styled components
 const NavBarContainer = styled.nav`
@@ -101,5 +102,10 @@ function NavBar({ cartCount }) {
         </NavBarContainer>
     );
 }
+
+// Prop validation
+NavBar.propTypes = {
+    cartCount: PropTypes.number.isRequired,
+};
 
 export default NavBar;

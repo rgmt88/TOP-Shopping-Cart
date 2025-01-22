@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 // Left area container (cart items)
 const CartContainer = styled.div`
@@ -218,5 +219,23 @@ function CartPage({
         </CartPageWrapper>
     );
 }
+
+// Prop validation
+CartPage.propTypes = {
+    cartItems: PropTypes.arrayOf(
+        PropTypes.shape({
+            id: PropTypes.number.isRequired,
+            image: PropTypes.string.isRequired,
+            title: PropTypes.string.isRequired,
+            shortDesc: PropTypes.string,
+            price: PropTypes.number.isRequired,
+            quantity: PropTypes.number.isRequired,
+        })
+    ).isRequired,
+    updateItemQuantity: PropTypes.func.isRequired,
+    removeItem: PropTypes.func.isRequired,
+    shipping: PropTypes.number,
+    taxRate: PropTypes.number,
+};
 
 export default CartPage;

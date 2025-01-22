@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 // Styled containers
 const ProductsContainer = styled.div`
@@ -43,7 +44,7 @@ const ProductDescription = styled.p`
 
 const ProductPrice = styled.p`
     font-weight: bold;
-    maring: 0.5rem 0;
+    margin: 0.5rem 0;
 `;
 
 const QuantityInput = styled.input`
@@ -155,5 +156,10 @@ function ProductPage({ category, onAddToCart }) {
         </ProductsContainer>
     );
 }
+
+ProductPage.propTypes = {
+    category: PropTypes.string.isRequired,
+    onAddToCart: PropTypes.func.isRequired,
+};
 
 export default ProductPage;
