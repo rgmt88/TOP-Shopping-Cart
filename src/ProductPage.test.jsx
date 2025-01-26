@@ -1,4 +1,6 @@
+import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
+import { act } from 'react';
 import ProductPage from './ProductPage';
 
 // Mock fetch response
@@ -27,14 +29,17 @@ global.fetch = jest.fn(() =>
 describe('ProductPage', () => {
     it('renders loading state initially', () => {
         render(<ProductPage category="test-category" onAddToCart={jest.fn()} />);
+        
         expect(screen.getByText(/loading products.../i)).toBeInTheDocument();
     });
 
     it('displays products after fetching data', async () => {
-        render(<ProductPage category="test-category" onAddToCart={jest.fn()} />);
+        await act(async () => {
+            render(<ProductPage category="test-category" onAddToCart={jest.fn()} />);
+        });
 
         // Wait for the products to load
-        const productTitles = await screen.findAllByText(/test product/i);
+        const productTitles = await screen.findAllByRole('heading', { level: 2, name: /test product/i });
         expect(productTitles).toHaveLength(2);
 
         // Ensure product details are displayed
@@ -44,7 +49,9 @@ describe('ProductPage', () => {
 
     it('calls onAddToCart when "Add to Cart" is clicked', async () => {
         const onAddToCartMock = jest.fn();
-        render(<ProductPage category="test-category" onAddToCart={onAddToCartMock} />);
+        await act(async () => {
+            render(<ProductPage category="test-category" onAddToCart={onAddToCartMock} />);
+        });
 
         // Wait for products to load
         await screen.findByText('Test Product 1');

@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import React from 'react';
+import { useEffect, useState, act } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
@@ -83,6 +84,8 @@ function ProductPage({ category, onAddToCart }) {
     const [error, setError] = useState(null);
 
     useEffect(() => {
+        let isMounted = true; // Add a flag to prevent updates after unmount
+        
         async function fetchProducts() {
             setLoading(true);
             setError(null);
@@ -92,14 +95,24 @@ function ProductPage({ category, onAddToCart }) {
                     throw new Error(`Error: ${res.statusText}`);
                 }
                 const data = await res.json();
-                setProducts(data);
+                if (isMounted) {
+                    setProducts(data);
+                }
             } catch (err) {
-                setError(err.message);
+                if (isMounted) {
+                    setError(err.message);
+                }
             } finally {
-                setLoading(false);
+                if (isMounted) {
+                    setLoading(false);
+                }
             }
         }
         fetchProducts();
+
+        return () => {
+            isMounted = false; // Cleanup flag when component unmounts
+        };
     }, [category]);
 
     // Handle "Add to Cart" logic
